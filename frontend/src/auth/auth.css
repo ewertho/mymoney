@@ -1,9 +1,27 @@
+
 .wrapper {
     background-color: #fff!important;
+    background-image: url('../assets/ballots-1194989_1920.jpg');
+    min-height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
 }
 
+.moneylogin{
+    color: #eee;
+}
+.btn-login{
+    background-color: blueviolet;
+}
+.login-logo{
+    background-color: blueviolet;
+    margin-bottom: 0px;
+}
 .login-box-body {
     background-color: #eee;
+    
 }
 
 .login-box button {

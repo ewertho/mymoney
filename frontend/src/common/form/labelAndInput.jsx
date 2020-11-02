@@ -8,7 +8,7 @@ export default props=>(
                 {props.label}
             </label>
             {/**{...props.input} significa que o input esta recebendo varios parametros de outro component */}
-            <input {...props.input} className='form-control' placeholder={props.placeholder}
+            <input {...props.input} className='form-control'  placeholder={props.placeholder}
                 readOnly={props.readOnly} type={props.type}/>
         </div>
     </Grid>
