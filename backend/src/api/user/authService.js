@@ -42,7 +42,7 @@ const login = (req, res, next) => {
              * se houver email na base e senha associada ao email for iqual ao hash passado(senha),
              * é feito um token com validade de 1 dia
              */
-            const token = jwt.sign(user, env.authSecret, {
+            const token = jwt.sign({...user}, env.authSecret, {
                 expiresIn: "1 day"
             })
             const { name, email } = user

@@ -20,8 +20,13 @@ function submit(values, url) {
                 ])
             })
             .catch(e => {
-                e.response.data.errors.forEach(
-                error => toastr.error('Erro', error))
+                if(e.response === undefined){
+                    console.log(e)
+                    toastr.error('Servidor indisponivel', 'tente novamente mais tarde')
+                }else{
+                    e.response.data.errors.forEach(
+                    error => toastr.error('Erro', error))
+                }
             })
     }
 }

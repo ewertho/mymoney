@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { login, signup } from './authActions'
 import Row from '../common/layout/row'
 import Grid from '../common/layout/grid'
-import If from '../common/operador/if'
+
 import Messages from '../common/msg/messages'
 import Input from '../common/form/inputAuth'
 
@@ -34,9 +34,8 @@ class Auth extends Component {
         return (
             
             <div className="login-box">
-                <div className="login-logo"><b> My</b> Money</div>
+                <div className="login-logo"><b> Meu</b> <span className='moneylogin'>Caderninho</span></div>
                 <div className="login-box-body">
-                    <p className="login-box-msg">Bem vindo!</p>
                     <form onSubmit={handleSubmit(v => this.onSubmit(v))}>
                         <Field component={Input} type="input" name="name"
                             placeholder="Nome" icon='user' hide={loginMode} />
@@ -49,7 +48,7 @@ class Auth extends Component {
                         <Row>
                             <Grid cols="4">
                                 <button type="submit"
-                                    className="btn btn-primary btn-block btn-flat"
+                                    className="btn btn-primary btn-block btn-flat btn-login"
                                 >
                                     {loginMode ? 'Entrar' : 'Registrar'}
                                 </button>

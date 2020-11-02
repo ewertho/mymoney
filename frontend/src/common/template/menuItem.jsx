@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link } from 'react-router'
+import {Link } from 'react-router-dom'
 
 /**menuItem sera apenas para suporte do menu
  * sera recebido: icon, label, path
@@ -7,7 +7,8 @@ import {Link } from 'react-router'
  */
 export default props =>(
     <li>
-        <Link href={props.path}>
+        {console.log(props.path)}
+        <Link to={props.path}>
             <i className={`fa fa-${props.icon}`}></i> <span>{props.label}</span>
         </Link>
     </li>
