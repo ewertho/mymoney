@@ -1,7 +1,7 @@
 /**configuração basica do servidor*/
 
 //backend 3003 - frontend 8080
-const port = 3003
+
 
 const bodyParser = require("body-parser")
 const express  = require("express")
@@ -15,8 +15,8 @@ server.use(bodyParser.json())
 server.use(allowCors)
 server.use(queryParser())
 
-server.listen(port, function(){
-    console.log(`BACKEND is running on port ${port}.`)
+server.listen(process.env.PORT || 3000, function(){
+    console.log(`BACKEND is running`)
 })
 
 //variavel sendo exportada para arquivo de rotas a partir do loader

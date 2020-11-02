@@ -24,6 +24,8 @@ function submit(values, url) {
                     console.log(e)
                     toastr.error('Servidor indisponivel', 'tente novamente mais tarde')
                 }else{
+                    console.log(e.response.data)
+                    console.log(e.response.data.errors)
                     e.response.data.errors.forEach(
                     error => toastr.error('Erro', error))
                 }

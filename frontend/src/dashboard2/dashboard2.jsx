@@ -5,7 +5,7 @@ import ContentHeader from '../common/template/contentHeader'
 import Content from '../common/template/content'
 import ValueBox from '../common/widget/valueBox'
 
-const BASE_URL = 'http://localhost:3003/api'
+const BASE_URL = 'https://meu-caderninho-backend.herokuapp.com/api'
 
 class Dashboard extends Component{
     constructor(props){

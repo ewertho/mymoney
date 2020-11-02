@@ -56,7 +56,7 @@ class Auth extends Component {
                         </Row>
                     </form>
                     <br />
-                    <a onClick={() => this.changeMode()}
+                    <a href='javascript:void(0)' onClick={() => this.changeMode()}
                     >
                         {loginMode ? 'Novo usuário? Registrar aqui!' :
                             'Já é cadastrado? Entrar aqui!'}

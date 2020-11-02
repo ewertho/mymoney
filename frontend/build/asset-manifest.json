@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.bda2d837.chunk.css",
+    "main.js": "/static/js/main.aeb9a062.chunk.js",
+    "main.js.map": "/static/js/main.aeb9a062.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.e8081125.js",
+    "runtime-main.js.map": "/static/js/runtime-main.e8081125.js.map",
+    "static/css/2.f24ae371.chunk.css": "/static/css/2.f24ae371.chunk.css",
+    "static/js/2.ec5d4c54.chunk.js": "/static/js/2.ec5d4c54.chunk.js",
+    "static/js/2.ec5d4c54.chunk.js.map": "/static/js/2.ec5d4c54.chunk.js.map",
+    "static/js/3.9b0ca57b.chunk.js": "/static/js/3.9b0ca57b.chunk.js",
+    "static/js/3.9b0ca57b.chunk.js.map": "/static/js/3.9b0ca57b.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.f24ae371.chunk.css.map": "/static/css/2.f24ae371.chunk.css.map",
+    "static/css/main.bda2d837.chunk.css.map": "/static/css/main.bda2d837.chunk.css.map",
+    "static/js/2.ec5d4c54.chunk.js.LICENSE.txt": "/static/js/2.ec5d4c54.chunk.js.LICENSE.txt",
+    "static/media/auth.css": "/static/media/ballots-1194989_1920.2c39f020.jpg",
+    "static/media/AdminLTE.css": "/static/media/boxed-bg.0de93c39.jpg",
+    "static/media/font-awesome.css": "/static/media/fontawesome-webfont.f691f37e.woff",
+    "static/media/bootstrap.css": "/static/media/glyphicons-halflings-regular.be810be3.woff2",
+    "static/media/user-tie-solid.b3bdfff2.svg": "/static/media/user-tie-solid.b3bdfff2.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e8081125.js",
+    "static/css/2.f24ae371.chunk.css",
+    "static/js/2.ec5d4c54.chunk.js",
+    "static/css/main.bda2d837.chunk.css",
+    "static/js/main.aeb9a062.chunk.js"
+  ]
+}

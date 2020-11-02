@@ -1,7 +1,6 @@
 
 .wrapper {
-    background-color: #fff!important;
-    background-image: url('../assets/ballots-1194989_1920.jpg');
+    background-color: rgb(117, 65, 110)!important;
     min-height: 100vh;
     background-position: center;
     background-repeat: no-repeat;

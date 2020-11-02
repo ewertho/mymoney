@@ -7,7 +7,7 @@ const env = require('../../.env')
 
 //expressões regulares para validação de email e senha
 const emailRegex = /\S+@\S+\.\S+/
-const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})/
+const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{6,20})/
 
 /**metodo para tratar erros com o banco de dados com ajuda do lodash
  * todas as mensagens serão amontoadas num array e retornas com
@@ -83,7 +83,7 @@ const signup = (req, res, next) => {
     //ve se senha esta dentro das normas estabelecidas pela expressão regular
     if(!password.match(passwordRegex)) {
       return res.status(400).send({errors: [
-        "Senha precisar ter: uma letra maiúscula, uma letra minúscula, um número, uma caractere especial(@#$%) e tamanho entre 6-20."
+        "Senha precisar ter: uma letra maiúscula, uma letra minúscula, um número, uma caractere especial(!@#$%) e tamanho entre 6-20."
       ]})
     }
 
