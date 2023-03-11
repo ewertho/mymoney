@@ -1,0 +1,354 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Mymoney",
+    "description": "Api auxiliar para ciclos de pagamentos."
+  },
+  "host": "localhost:3003",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "BillingCycle",
+      "description": ""
+    },
+    {
+      "name": "User",
+      "description": ""
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "api_key": {
+      "type": "basic",
+      "name": "Login e senha",
+      "in": "header"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/count": {
+      "get": {
+        "tags": [
+          "BillingCycle"
+        ],
+        "description": "Endpoint para informar quantos pagamentos existem",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/get": {
+      "get": {
+        "tags": [
+          "BillingCycle"
+        ],
+        "description": "Endpoint para recuperar todos os pagamentos do usuário",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/remove/{id}": {
+      "delete": {
+        "tags": [
+          "BillingCycle"
+        ],
+        "description": "Endpoint para   pagamentos.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do pagamento."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/update/{id}": {
+      "post": {
+        "tags": [
+          "BillingCycle"
+        ],
+        "description": "Endpoint para atualizar pagamentos.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/summary": {
+      "get": {
+        "tags": [
+          "BillingCycle"
+        ],
+        "description": "Endpoint para informar o credito e debito total do usuário",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/insert": {
+      "post": {
+        "tags": [
+          "BillingCycle"
+        ],
+        "description": "Endpoint para inserir novos pagamentos.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "month": {
+                  "example": "any"
+                },
+                "year": {
+                  "example": "any"
+                },
+                "credits": {
+                  "example": "any"
+                },
+                "debts": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Cadastro efetuado.",
+            "schema": {
+              "$ref": "#/definitions/BillingCycle"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/signup": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "newUser",
+            "in": "body",
+            "description": "Informações do usuário.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddUser"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/validateToken": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Joao"
+        },
+        "email": {
+          "type": "string",
+          "example": "joao@email.com"
+        }
+      }
+    },
+    "AddUser": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Joao"
+        },
+        "email": {
+          "type": "string",
+          "example": "joao@email.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "P4ssw@rd"
+        },
+        "confirm_passwword": {
+          "type": "string",
+          "example": "P4ssw@ord"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "BillingCycle": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "PAN"
+        },
+        "month": {
+          "type": "number",
+          "example": 3
+        },
+        "year": {
+          "type": "number",
+          "example": 2023
+        },
+        "credits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "pix"
+            },
+            "value": {
+              "type": "number",
+              "example": 25
+            }
+          }
+        },
+        "debts": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "cartao"
+            },
+            "value": {
+              "type": "number",
+              "example": 45
+            },
+            "status": {
+              "type": "string",
+              "example": "PENDENTE"
+            }
+          }
+        }
+      }
+    }
+  }
+}
