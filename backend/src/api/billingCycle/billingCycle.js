@@ -37,5 +37,12 @@ const billingCycleSchema = new mongoose.Schema({
   debts: [debtSchema],
 });
 
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, min: 6, max: 12, required: true },
+  billingCycle: [billingCycleSchema],
+});
+
 //modelo se chamara BillingCycle, apontando para essa configuração
-module.exports = mongoose.model("BillingCycle", billingCycleSchema);
+module.exports = mongoose.model("BillingCycle", userSchema);

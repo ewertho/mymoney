@@ -35,151 +35,6 @@
     "application/json"
   ],
   "paths": {
-    "/count": {
-      "get": {
-        "tags": [
-          "BillingCycle"
-        ],
-        "description": "Endpoint para informar quantos pagamentos existem",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/get": {
-      "get": {
-        "tags": [
-          "BillingCycle"
-        ],
-        "description": "Endpoint para recuperar todos os pagamentos do usuário",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/remove/{id}": {
-      "delete": {
-        "tags": [
-          "BillingCycle"
-        ],
-        "description": "Endpoint para   pagamentos.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "ID do pagamento."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/update/{id}": {
-      "post": {
-        "tags": [
-          "BillingCycle"
-        ],
-        "description": "Endpoint para atualizar pagamentos.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/summary": {
-      "get": {
-        "tags": [
-          "BillingCycle"
-        ],
-        "description": "Endpoint para informar o credito e debito total do usuário",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/insert": {
-      "post": {
-        "tags": [
-          "BillingCycle"
-        ],
-        "description": "Endpoint para inserir novos pagamentos.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "month": {
-                  "example": "any"
-                },
-                "year": {
-                  "example": "any"
-                },
-                "credits": {
-                  "example": "any"
-                },
-                "debts": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Cadastro efetuado.",
-            "schema": {
-              "$ref": "#/definitions/BillingCycle"
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
     "/login": {
       "post": {
         "tags": [
@@ -260,6 +115,229 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/count": {
+      "get": {
+        "tags": [
+          "BillingCycle"
+        ],
+        "description": "Endpoint para informar quantos pagamentos existem",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/get": {
+      "get": {
+        "tags": [
+          "BillingCycle"
+        ],
+        "description": "Endpoint para recuperar todos os pagamentos do usuário",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/remove/{id}": {
+      "delete": {
+        "tags": [
+          "BillingCycle"
+        ],
+        "description": "Endpoint para   pagamentos.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do pagamento."
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/update/{id}": {
+      "post": {
+        "tags": [
+          "BillingCycle"
+        ],
+        "description": "Endpoint para atualizar pagamentos.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/summary": {
+      "get": {
+        "tags": [
+          "BillingCycle"
+        ],
+        "description": "Endpoint para informar o credito e debito total do usuário",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/insert": {
+      "post": {
+        "tags": [
+          "BillingCycle"
+        ],
+        "description": "Endpoint para inserir novos pagamentos.",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "example": "any"
+                },
+                "name": {
+                  "example": "any"
+                },
+                "month": {
+                  "example": "any"
+                },
+                "year": {
+                  "example": "any"
+                },
+                "credits": {
+                  "example": "any"
+                },
+                "debts": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Cadastro efetuado.",
+            "schema": {
+              "$ref": "#/definitions/BillingCycle"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
       }

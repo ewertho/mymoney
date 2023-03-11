@@ -19,6 +19,11 @@ const BillingCycle = require("./api/billingCycle/billingCycleService");
 
 // BillingCycle.register(protectedApi, "/billingCycles");
 
+route.post("/login", AuthService.login);
+route.post("/signup", AuthService.signup);
+route.post("/validateToken", AuthService.validateToken);
+
+route.use(auth);
 route.get("/count", BillingCycle.count);
 route.get("/get", BillingCycle.get);
 route.delete("/remove/:id", BillingCycle.remove);
@@ -29,9 +34,5 @@ route.post("/insert", BillingCycle.insert);
  * Rotas abertas
  */
 // const openApi = express.Router();
-
-route.post("/login", AuthService.login);
-route.post("/signup", AuthService.signup);
-route.post("/validateToken", AuthService.validateToken);
 
 module.exports = route;

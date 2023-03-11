@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 //const env = require("../../.env");
 require("dotenv").config();
 
-module.exports = (req, res, next) => {
+const security = (req, res, next) => {
   /**verifica se a requisição é somente para ver se cors ta habilitado
    * nesses casos não é feita nenhuma validação
    * essa validação é feita somente no formato options
@@ -32,3 +32,5 @@ module.exports = (req, res, next) => {
     });
   }
 };
+
+module.exports = security;

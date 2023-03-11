@@ -2,7 +2,8 @@
 const _ = require("lodash");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const User = require("./user");
+
+const billingCycle = require("../billingCycle/billingCycle");
 // const env = require("../../.env");
 require("dotenv").config();
 
@@ -32,7 +33,8 @@ const login = async (req, res, next) => {
   // #swagger.tags = ['User']
   //pesquisar unico email, associando email a user, juntamente ao erro que pode vim junto
   try {
-    const user = await User.findOne({ email });
+    const user = await billingCycle.findOne({ email });
+
     if (user && bcrypt.compareSync(password, user.password)) {
       /**se não houver erros é visto a senha
        * se houver email na base e senha associada ao email for iqual ao hash passado(senha),
@@ -48,7 +50,7 @@ const login = async (req, res, next) => {
       return res.status(400).send({ errors: ["Usuário/Senha inválidos"] });
     }
   } catch (error) {
-    return sendErrorsFromDB(res, err);
+    return res.status(500).send({ errors: error });
   }
 };
 
@@ -73,11 +75,11 @@ const signup = async (req, res, next) => {
   const password = req.body.password || "";
   const confirmPassword = req.body.confirm_password || "";
   /* #swagger.parameters['newUser'] = {
-               in: 'body',
-               description: 'Informações do usuário.',
-               required: true,
-               schema: { $ref: "#/definitions/AddUser" }
-        } */
+    in: 'body',
+    description: 'Informações do usuário.',
+    required: true,
+    schema: { $ref: "#/definitions/AddUser" }
+  } */
 
   //ve se email esta dentro das normas estabelecidas pela expressão regular
   if (!email.match(emailRegex)) {
@@ -108,13 +110,15 @@ const signup = async (req, res, next) => {
    * sempre verificando possiveis erros no banco
    */
   try {
-    const user = await User.findOne({ email });
+    const user = await billingCycle.findOne({ email });
+
     if (user) {
       return res.status(400).send({ errors: ["Usuário já cadastrado."] });
     } else {
       //cadastro de novo usuario, passando sempre a senha encryptada
-      const newUser = new User({ name, email, password: passwordHash });
+      const newUser = new billingCycle({ name, email, password: passwordHash });
       const save_user = await newUser.save();
+
       if (save_user) {
         login(req, res, next);
       } else {
