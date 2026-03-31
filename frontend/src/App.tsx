@@ -148,7 +148,9 @@ function App() {
             </article>
             <article className="glass operations-card">
               <span className="section-kicker">{t("darkMode")}</span>
-              <strong>{theme === "dark" ? t("lightMode") : t("darkMode")}</strong>
+              <strong>
+                {theme === "dark" ? t("lightMode") : t("darkMode")}
+              </strong>
               <p>{t("syncReadyDescription", { count: 1 })}</p>
             </article>
           </div>
@@ -211,7 +213,11 @@ function App() {
           })}
         </nav>
 
-        <button onClick={clearSession} className="danger-btn sidebar-signout" type="button">
+        <button
+          onClick={clearSession}
+          className="danger-btn sidebar-signout"
+          type="button"
+        >
           <span className="nav-item__icon">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M14 4h6v16h-6v-2h4V6h-4V4Zm-2 4 1.4 1.4L11.8 11H4v2h7.8l1.6 1.6L12 16l-4-4 4-4Z" />
@@ -262,7 +268,11 @@ function App() {
                 <Icon name="language" />
               </span>
             </button>
-            <span className="user-avatar" aria-label={user.name} title={user.name}>
+            <span
+              className="user-avatar"
+              aria-label={user.name}
+              title={user.name}
+            >
               {user.name.charAt(0).toUpperCase()}
             </span>
           </div>
