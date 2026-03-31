@@ -1,0 +1,56 @@
+services:
+  mongodb:
+    image: mongo:8
+    container_name: mymoney-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mymoney
+      MONGO_INITDB_ROOT_PASSWORD: mymoney
+      MONGO_INITDB_DATABASE: mymoney
+    volumes:
+      - mymoney-mongo-data:/data/db
+    networks:
+      - mymoney-net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mymoney-backend
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+    environment:
+      PORT: 3000
+      MONGO_URI: mongodb://mymoney:mymoney@mongodb:27017/mymoney?authSource=admin
+      JWT_SECRET: mymoney-super-secret
+      JWT_EXPIRES_IN: 12h
+      CORS_ORIGIN: http://localhost:5173
+    ports:
+      - "3000:3000"
+    networks:
+      - mymoney-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: mymoney-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: http://localhost:3000/api
+    ports:
+      - "5173:5173"
+    networks:
+      - mymoney-net
+
+volumes:
+  mymoney-mongo-data:
+
+networks:
+  mymoney-net:
+    driver: bridge
