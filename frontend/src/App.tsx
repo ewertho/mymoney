@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 import { AppSidebar } from "./components/AppSidebar";
 import { AppTopbar } from "./components/AppTopbar";
+import { SidebarProvider, useSidebar } from "./context/SidebarContext";
 import { AuthPanel } from "./features/auth/AuthPanel";
 import { BillingCyclePanel } from "./features/billing/BillingCyclePanel";
 import { ControlsPanel } from "./features/dashboard/ControlsPanel";
@@ -14,10 +15,10 @@ import { OverviewPanel } from "./features/dashboard/OverviewPanel";
 import { useAuthStore } from "./store/authStore";
 import { useUiStore } from "./store/uiStore";
 
-function App() {
+function AppContent() {
   const { t, i18n } = useTranslation();
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [activeSection, setActiveSection] = useState<ShellSection>("overview");
+  const { sidebarWidth } = useSidebar();
   const {
     hideValues,
     theme,
@@ -70,12 +71,17 @@ function App() {
   }
 
   return (
-    <main className="app-shell">
+    <main
+      className="app-shell"
+      style={
+        {
+          "--sidebar-width": `${sidebarWidth}px`,
+        } as CSSProperties
+      }
+    >
       <AppSidebar
-        isCollapsed={isSidebarCollapsed}
         navItems={navItems}
         activeSection={activeSection}
-        onToggleCollapsed={() => setIsSidebarCollapsed((current) => !current)}
         onSelectSection={setActiveSection}
         onSignOut={clearSession}
         logoutLabel={t("logout")}
@@ -99,6 +105,14 @@ function App() {
         <div className="shell-content">{renderSection()}</div>
       </section>
     </main>
+  );
+}
+
+function App() {
+  return (
+    <SidebarProvider>
+      <AppContent />
+    </SidebarProvider>
   );
 }
 

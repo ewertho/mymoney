@@ -1,4 +1,7 @@
 :root {
+  --sidebar-expanded-width: 280px;
+  --sidebar-collapsed-width: 86px;
+  --sidebar-width: var(--sidebar-expanded-width);
   --bg-0: #061018;
   --bg-1: #081826;
   --bg-2: #0f2737;
@@ -51,6 +54,7 @@ body {
   margin: 0;
   min-height: 100vh;
   color: var(--text);
+  overflow-x: hidden;
   background:
     radial-gradient(
       circle at 8% 7%,
@@ -75,8 +79,10 @@ select {
 .app-shell {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
   align-items: stretch;
+  overflow-x: clip;
+  transition: grid-template-columns 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .app-shell--guest {
@@ -98,6 +104,8 @@ select {
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 0.95rem;
+  width: var(--sidebar-width);
+  min-width: 0;
   padding: 1rem;
   border-radius: 0;
   border-left: 0;
@@ -106,17 +114,26 @@ select {
   border-right: 1px solid rgba(140, 181, 208, 0.2);
   background: linear-gradient(180deg, var(--sidebar-1), var(--sidebar-2));
   animation: slide-in 460ms ease;
+  overflow: hidden;
+  transition:
+    width 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    padding 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    gap 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .sidebar-brand {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  min-height: 2.2rem;
 }
 
 .brand-copy {
   display: grid;
   gap: 0.2rem;
+  overflow: hidden;
+  transition:
+    opacity 240ms ease,
+    transform 320ms ease;
 }
 
 .brand-copy strong {
@@ -205,6 +222,10 @@ select {
 .nav-item__content {
   display: grid;
   gap: 0.08rem;
+  overflow: hidden;
+  transition:
+    opacity 220ms ease,
+    transform 300ms ease;
 }
 
 .nav-item__content strong {
@@ -228,17 +249,25 @@ select {
 }
 
 .app-sidebar.is-collapsed {
-  width: 86px;
+  width: var(--sidebar-collapsed-width);
 }
 
 .app-sidebar.is-collapsed .sidebar-brand {
   justify-content: center;
 }
 
+.app-sidebar.is-collapsed .brand-copy,
+.app-sidebar.is-collapsed .nav-item__content,
+.app-sidebar.is-collapsed .sidebar-signout span:last-child {
+  opacity: 0;
+  transform: translateX(-8px);
+}
+
 .shell-main {
   min-width: 0;
   display: grid;
   grid-template-rows: auto 1fr;
+  overflow-x: hidden;
 }
 
 .shell-topbar {
@@ -260,7 +289,28 @@ select {
   align-items: center;
   gap: 1rem;
   padding: 0.95rem 1.25rem;
+  width: 100%;
+  min-width: 0;
   animation: drop-in 420ms ease;
+  transition:
+    padding 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    gap 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    grid-template-columns 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.topbar-heading {
+  display: grid;
+  min-width: 0;
+  transition:
+    opacity 220ms ease,
+    transform 300ms ease;
 }
 
 .topbar-left h1 {
@@ -285,6 +335,7 @@ select {
   border-radius: 12px;
   padding: 0 0.75rem;
   color: var(--muted);
+  min-width: 0;
 }
 
 .topbar-search input {
@@ -300,6 +351,8 @@ select {
   display: flex;
   justify-content: flex-end;
   gap: 0.42rem;
+  position: relative;
+  z-index: 1;
 }
 
 .icon-btn {
@@ -933,6 +986,7 @@ select:disabled {
   .shell-topbar {
     grid-template-columns: 1fr;
     align-items: stretch;
+    width: 100%;
   }
 
   .topbar-actions {
@@ -955,7 +1009,7 @@ select:disabled {
 
 @media (max-width: 860px) {
   .app-shell {
-    grid-template-columns: 88px 1fr;
+    grid-template-columns: var(--sidebar-collapsed-width) 1fr;
   }
 
   .app-sidebar .brand-copy,
@@ -972,10 +1026,12 @@ select:disabled {
 
 @media (max-width: 640px) {
   .app-shell {
+    --sidebar-width: 100%;
     grid-template-columns: 1fr;
   }
 
   .app-sidebar {
+    width: 100%;
     border-right: 0;
     border-radius: 0;
     grid-template-rows: auto;

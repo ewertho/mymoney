@@ -1,3 +1,4 @@
+import { useSidebar } from "../context/SidebarContext";
 import { AppIcon } from "./AppIcon";
 
 type AppTopbarProps = {
@@ -27,11 +28,20 @@ export function AppTopbar({
   onToggleTheme,
   onToggleLanguage,
 }: AppTopbarProps) {
+  const { isCollapsed, toggleSidebar } = useSidebar();
+
   return (
     <header className="shell-topbar glass">
       <div className="topbar-left">
-        <h1>{title}</h1>
-        <p>{subtitle}</p>
+        <button
+          type="button"
+          className="sidebar-toggle"
+          onClick={toggleSidebar}
+          aria-label={isCollapsed ? "Expandir menu" : "Recolher menu"}
+          aria-expanded={!isCollapsed}
+        >
+          <AppIcon name="collapse" />
+        </button>
       </div>
 
       <label className="topbar-search" aria-label="Busca rapida">

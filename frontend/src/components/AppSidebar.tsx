@@ -1,3 +1,4 @@
+import { useSidebar } from "../context/SidebarContext";
 import type {
   NavItem,
   ShellSection,
@@ -5,41 +6,35 @@ import type {
 import { AppIcon } from "./AppIcon";
 
 type AppSidebarProps = {
-  isCollapsed: boolean;
   navItems: NavItem[];
   activeSection: ShellSection;
-  onToggleCollapsed: () => void;
   onSelectSection: (section: ShellSection) => void;
   onSignOut: () => void;
   logoutLabel: string;
 };
 
 export function AppSidebar({
-  isCollapsed,
   navItems,
   activeSection,
-  onToggleCollapsed,
   onSelectSection,
   onSignOut,
   logoutLabel,
 }: AppSidebarProps) {
+  const { isCollapsed } = useSidebar();
+
   return (
     <aside className={`app-sidebar glass ${isCollapsed ? "is-collapsed" : ""}`}>
       <div className="sidebar-brand">
-        <button
-          type="button"
-          className="sidebar-toggle"
-          onClick={onToggleCollapsed}
-          aria-label={isCollapsed ? "Expandir menu" : "Recolher menu"}
-        >
-          <AppIcon name="collapse" />
-        </button>
         {!isCollapsed ? (
           <div className="brand-copy">
             <strong>MyMoney</strong>
             <small>Finance Command Center</small>
           </div>
-        ) : null}
+        ) : (
+          <div className="brand-copy">
+            <strong>MM</strong>
+          </div>
+        )}
       </div>
 
       <nav className="sidebar-nav" aria-label="Primary">
