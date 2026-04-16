@@ -1,17 +1,17 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
-import { AppSidebar } from "./components/AppSidebar";
-import { AppTopbar } from "./components/AppTopbar";
 import { SidebarProvider, useSidebar } from "./context/SidebarContext";
-import { AuthPanel } from "./features/auth/AuthPanel";
-import { BillingCyclePanel } from "./features/billing/BillingCyclePanel";
-import { ControlsPanel } from "./features/dashboard/ControlsPanel";
+import { AuthPanel } from "./features/auth/components/AuthPanel";
+import { BillingCyclePanel } from "./features/billing/components/BillingCyclePanel";
+import { ControlsPanel } from "./features/dashboard/components/ControlsPanel";
 import {
   getMetrics,
   getNavItems,
   type ShellSection,
-} from "./features/dashboard/dashboardContent";
-import { OverviewPanel } from "./features/dashboard/OverviewPanel";
+} from "./features/dashboard/model/dashboardContent";
+import { OverviewPanel } from "./features/dashboard/components/OverviewPanel";
+import { AppSidebar } from "./layout/shell/AppSidebar";
+import { AppTopbar } from "./layout/shell/AppTopbar";
 import { useAuthStore } from "./store/authStore";
 import { useUiStore } from "./store/uiStore";
 
@@ -85,13 +85,14 @@ function AppContent() {
         onSelectSection={setActiveSection}
         onSignOut={clearSession}
         logoutLabel={t("logout")}
+        userName={user.name}
       />
 
       <section className="shell-main">
         <AppTopbar
           title={t("appTitle")}
           subtitle={t("subtitle")}
-          searchPlaceholder="Buscar por ciclos, contas ou tags"
+          searchPlaceholder={t("searchPlaceholder")}
           hideValuesLabel={hideValues ? t("showValues") : t("hideValues")}
           themeLabel={theme === "dark" ? t("lightMode") : t("darkMode")}
           languageLabel={t("language")}

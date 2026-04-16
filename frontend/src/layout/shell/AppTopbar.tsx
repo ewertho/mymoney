@@ -1,5 +1,6 @@
-import { useSidebar } from "../context/SidebarContext";
-import { AppIcon } from "./AppIcon";
+import { useTranslation } from "react-i18next";
+import { useSidebar } from "../../context/SidebarContext";
+import { AppIcon } from "../../shared/ui/AppIcon";
 
 type AppTopbarProps = {
   title: string;
@@ -28,23 +29,32 @@ export function AppTopbar({
   onToggleTheme,
   onToggleLanguage,
 }: AppTopbarProps) {
+  const { t } = useTranslation();
   const { isCollapsed, toggleSidebar } = useSidebar();
+  const isShowingValues = hideValuesLabel !== t("showValues");
+  const isDarkTheme = themeLabel === t("lightMode");
 
   return (
-    <header className="shell-topbar glass">
+    <header className="shell-topbar">
       <div className="topbar-left">
         <button
           type="button"
           className="sidebar-toggle"
           onClick={toggleSidebar}
-          aria-label={isCollapsed ? "Expandir menu" : "Recolher menu"}
+          aria-label={isCollapsed ? t("expandSidebar") : t("collapseSidebar")}
           aria-expanded={!isCollapsed}
         >
-          <AppIcon name="collapse" />
+          <AppIcon name={isCollapsed ? "expand" : "collapse"} />
         </button>
+
+        <div className="topbar-heading">
+          <span className="section-kicker">{t("workspaceLabel")}</span>
+          <h1>{title}</h1>
+          <p>{subtitle}</p>
+        </div>
       </div>
 
-      <label className="topbar-search" aria-label="Busca rapida">
+      <label className="topbar-search" aria-label={t("quickSearchLabel")}>
         <AppIcon name="search" />
         <input type="search" placeholder={searchPlaceholder} />
       </label>
@@ -57,19 +67,7 @@ export function AppTopbar({
           aria-label={hideValuesLabel}
           title={hideValuesLabel}
         >
-          <span aria-hidden="true">
-            <AppIcon name="eye" />
-          </span>
-        </button>
-        <button
-          className="ghost-btn icon-btn"
-          type="button"
-          aria-label="Notificacoes"
-          title="Notificacoes"
-        >
-          <span aria-hidden="true">
-            <AppIcon name="bell" />
-          </span>
+          <AppIcon name={isShowingValues ? "eye" : "eyeOff"} />
         </button>
         <button
           onClick={onToggleTheme}
@@ -78,24 +76,27 @@ export function AppTopbar({
           aria-label={themeLabel}
           title={themeLabel}
         >
-          <span aria-hidden="true">
-            <AppIcon name="theme" />
-          </span>
+          <AppIcon name={isDarkTheme ? "theme" : "themeLight"} />
         </button>
         <button
           onClick={onToggleLanguage}
-          className="ghost-btn icon-btn"
+          className="ghost-btn topbar-pill"
           type="button"
           aria-label={`${languageLabel}: ${language}`}
           title={`${languageLabel}: ${language}`}
         >
-          <span aria-hidden="true">
-            <AppIcon name="language" />
-          </span>
+          <AppIcon name="language" />
+          <span>{language}</span>
         </button>
-        <span className="user-avatar" aria-label={userName} title={userName}>
-          {userName.charAt(0).toUpperCase()}
-        </span>
+        <div className="topbar-user">
+          <span className="user-avatar" aria-label={userName} title={userName}>
+            {userName.charAt(0).toUpperCase()}
+          </span>
+          <div className="topbar-user-copy">
+            <strong>{userName}</strong>
+            <small>{t("topbarStatus")}</small>
+          </div>
+        </div>
       </div>
     </header>
   );

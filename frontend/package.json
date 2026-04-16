@@ -9,9 +9,12 @@
     "preview": "vite preview --host 0.0.0.0 --port 4173"
   },
   "dependencies": {
+    "@fontsource/dm-sans": "^5.2.8",
+    "@fontsource/space-grotesk": "^5.2.10",
     "@tanstack/react-query": "^5.90.2",
     "axios": "^1.12.2",
     "i18next": "^25.6.0",
+    "lucide-react": "^1.8.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-i18next": "^16.1.0",

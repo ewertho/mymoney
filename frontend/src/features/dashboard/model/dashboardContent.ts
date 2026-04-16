@@ -1,5 +1,5 @@
 import type { TFunction } from "i18next";
-import type { IconName } from "../../components/AppIcon";
+import type { IconName } from "../../../shared/ui/AppIcon";
 
 export type ShellSection = "overview" | "cycles" | "controls";
 
@@ -23,7 +23,7 @@ export function getNavItems(t: TFunction): NavItem[] {
     {
       id: "overview",
       label: t("summary"),
-      detail: t("subtitle"),
+      detail: t("summaryNavDescription"),
       icon: "dashboard",
     },
     {
@@ -34,8 +34,8 @@ export function getNavItems(t: TFunction): NavItem[] {
     },
     {
       id: "controls",
-      label: t("language"),
-      detail: t("authWorkspaceTitle"),
+      label: t("settingsTitle"),
+      detail: t("controlsNavDescription"),
       icon: "controls",
     },
   ];
@@ -48,28 +48,28 @@ export function getMetrics(hideValues: boolean): MetricCard[] {
       value: hideValues ? "R$ ....." : "R$ 52.480",
       trend: "+12.4% vs mes anterior",
       tone: "teal",
-      icon: "trend",
+      icon: "income",
     },
     {
       title: "Despesas",
       value: hideValues ? "R$ ....." : "R$ 34.910",
       trend: "-4.1% de reducao",
       tone: "orange",
-      icon: "flash",
+      icon: "expense",
     },
     {
       title: "Saldo Liquido",
       value: hideValues ? "R$ ....." : "R$ 17.570",
       trend: "+8.7% de crescimento",
       tone: "cyan",
-      icon: "spark",
+      icon: "wallet",
     },
     {
       title: "Transacoes Hoje",
       value: hideValues ? ".." : "28",
       trend: "7 pendentes de conciliacao",
       tone: "rose",
-      icon: "bell",
+      icon: "sync",
     },
   ];
 }

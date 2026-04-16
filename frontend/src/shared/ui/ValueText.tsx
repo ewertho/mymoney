@@ -1,5 +1,5 @@
-import { PropsWithChildren } from "react";
-import { useUiStore } from "../store/uiStore";
+import type { PropsWithChildren } from "react";
+import { useUiStore } from "../../store/uiStore";
 
 type Props = PropsWithChildren<{ value?: number; prefix?: string }>;
 
@@ -11,7 +11,7 @@ export function ValueText({ value, prefix = "R$ ", children }: Props) {
   }
 
   if (hideValues) {
-    return <>*****</>;
+    return <>••••••</>;
   }
 
   return (

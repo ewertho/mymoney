@@ -1,12 +1,12 @@
-import { FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { TransactionStatus } from "../../components/TransactionStatus";
-import { ValueText } from "../../components/ValueText";
-import { getRequestMessage } from "../../lib/errors";
-import type { BillingCycle } from "../../types/domain";
-import { useBillingCycles } from "./hooks/useBillingCycles";
-import { useCreateCycle } from "./hooks/useCreateCycle";
-import { useDeleteCycle } from "./hooks/useDeleteCycle";
+import { getRequestMessage } from "../../../lib/errors";
+import { TransactionStatus } from "../../../shared/ui/TransactionStatus";
+import { ValueText } from "../../../shared/ui/ValueText";
+import type { BillingCycle } from "../../../types/domain";
+import { useBillingCycles } from "../hooks/useBillingCycles";
+import { useCreateCycle } from "../hooks/useCreateCycle";
+import { useDeleteCycle } from "../hooks/useDeleteCycle";
 
 export function BillingCyclePanel() {
   const { t } = useTranslation();
@@ -161,17 +161,17 @@ export function BillingCyclePanel() {
   return (
     <section className="dashboard-grid">
       <div className="operations-strip">
-        <article className="glass operations-card">
+        <article className="glass-panel operations-card">
           <span className="section-kicker">{t("syncStatusLabel")}</span>
           <strong>{syncCard.title}</strong>
           <p>{syncCard.description}</p>
         </article>
-        <article className="glass operations-card">
+        <article className="glass-panel operations-card">
           <span className="section-kicker">{t("activeTaskLabel")}</span>
           <strong>{taskCard.title}</strong>
           <p>{taskCard.description}</p>
         </article>
-        <article className="glass operations-card">
+        <article className="glass-panel operations-card">
           <span className="section-kicker">{t("impactPreviewLabel")}</span>
           <strong>{t("projectedBalanceTitle")}</strong>
           <p>
@@ -211,7 +211,7 @@ export function BillingCyclePanel() {
       <div className="content-grid">
         <form
           onSubmit={submit}
-          className="glass form-panel transactional-panel"
+          className="glass-panel form-panel transactional-panel"
         >
           <div className="panel-header">
             <span className="section-kicker">{t("billingWorkspaceTitle")}</span>
@@ -292,7 +292,7 @@ export function BillingCyclePanel() {
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder={t("notes")}
-              rows={3}
+              rows={4}
               disabled={isMutating}
             />
           </fieldset>
@@ -327,10 +327,10 @@ export function BillingCyclePanel() {
           </button>
         </form>
 
-        <div className="glass table-panel transactional-panel">
+        <div className="glass-panel table-panel transactional-panel">
           <div className="panel-header">
             <span className="section-kicker">{t("cycles")}</span>
-            <h3 className="section-title">{t("cycles")}</h3>
+            <h3 className="section-title">{t("cyclesTableTitle")}</h3>
             <p className="section-description">
               {t("cyclesWorkspaceDescription")}
             </p>
@@ -364,59 +364,64 @@ export function BillingCyclePanel() {
               />
             </div>
           ) : (
-            <table>
-              <thead>
-                <tr>
-                  <th>{t("cycleName")}</th>
-                  <th>
-                    {t("month")}/{t("year")}
-                  </th>
-                  <th>{t("credits")}</th>
-                  <th>{t("debts")}</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {cycles.map((cycle) => (
-                  <tr
-                    key={cycle._id}
-                    className={
-                      deletingId === cycle._id ? "pending-row" : undefined
-                    }
-                  >
-                    <td>{cycle.name}</td>
-                    <td>
-                      {String(cycle.month).padStart(2, "0")}/{cycle.year}
-                    </td>
-                    <td>
-                      <ValueText
-                        value={cycle.credits.reduce(
-                          (sum, c) => sum + c.value,
-                          0,
-                        )}
-                      />
-                    </td>
-                    <td>
-                      <ValueText
-                        value={cycle.debts.reduce((sum, d) => sum + d.value, 0)}
-                      />
-                    </td>
-                    <td>
-                      <button
-                        className="danger-btn"
-                        type="button"
-                        onClick={() => handleDelete(cycle)}
-                        disabled={isMutating}
-                      >
-                        {deletingId === cycle._id
-                          ? t("deletePendingButton")
-                          : t("delete")}
-                      </button>
-                    </td>
+            <div className="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>{t("cycleName")}</th>
+                    <th>
+                      {t("month")}/{t("year")}
+                    </th>
+                    <th>{t("credits")}</th>
+                    <th>{t("debts")}</th>
+                    <th>{t("actionsLabel")}</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {cycles.map((cycle) => (
+                    <tr
+                      key={cycle._id}
+                      className={
+                        deletingId === cycle._id ? "pending-row" : undefined
+                      }
+                    >
+                      <td>{cycle.name}</td>
+                      <td>
+                        {String(cycle.month).padStart(2, "0")}/{cycle.year}
+                      </td>
+                      <td>
+                        <ValueText
+                          value={cycle.credits.reduce(
+                            (sum, credit) => sum + credit.value,
+                            0,
+                          )}
+                        />
+                      </td>
+                      <td>
+                        <ValueText
+                          value={cycle.debts.reduce(
+                            (sum, debt) => sum + debt.value,
+                            0,
+                          )}
+                        />
+                      </td>
+                      <td>
+                        <button
+                          className="danger-btn"
+                          type="button"
+                          onClick={() => handleDelete(cycle)}
+                          disabled={isMutating}
+                        >
+                          {deletingId === cycle._id
+                            ? t("deletePendingButton")
+                            : t("delete")}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </div>

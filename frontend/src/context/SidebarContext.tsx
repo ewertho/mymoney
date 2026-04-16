@@ -7,8 +7,8 @@ import {
   type PropsWithChildren,
 } from "react";
 
-const SIDEBAR_EXPANDED_WIDTH = 280;
-const SIDEBAR_COLLAPSED_WIDTH = 86;
+const SIDEBAR_EXPANDED_WIDTH = 296;
+const SIDEBAR_COLLAPSED_WIDTH = 96;
 
 type SidebarContextValue = {
   isCollapsed: boolean;

@@ -1,9 +1,10 @@
-import { useSidebar } from "../context/SidebarContext";
+import { useTranslation } from "react-i18next";
+import { useSidebar } from "../../context/SidebarContext";
 import type {
   NavItem,
   ShellSection,
-} from "../features/dashboard/dashboardContent";
-import { AppIcon } from "./AppIcon";
+} from "../../features/dashboard/model/dashboardContent";
+import { AppIcon } from "../../shared/ui/AppIcon";
 
 type AppSidebarProps = {
   navItems: NavItem[];
@@ -11,6 +12,7 @@ type AppSidebarProps = {
   onSelectSection: (section: ShellSection) => void;
   onSignOut: () => void;
   logoutLabel: string;
+  userName: string;
 };
 
 export function AppSidebar({
@@ -19,23 +21,24 @@ export function AppSidebar({
   onSelectSection,
   onSignOut,
   logoutLabel,
+  userName,
 }: AppSidebarProps) {
   const { isCollapsed } = useSidebar();
+  const { t } = useTranslation();
 
   return (
-    <aside className={`app-sidebar glass ${isCollapsed ? "is-collapsed" : ""}`}>
+    <aside className={`app-sidebar ${isCollapsed ? "is-collapsed" : ""}`}>
       <div className="sidebar-brand">
-        {!isCollapsed ? (
-          <div className="brand-copy">
-            <strong>MyMoney</strong>
-            <small>Finance Command Center</small>
-          </div>
-        ) : (
-          <div className="brand-copy">
-            <strong>MM</strong>
-          </div>
-        )}
+        <div className="brand-mark" aria-hidden="true">
+          <AppIcon name="wallet" />
+        </div>
+        <div className="brand-copy">
+          <strong>MyMoney</strong>
+          <small>{t("sidebarTagline")}</small>
+        </div>
       </div>
+
+      <div className="sidebar-section-label">{t("workspaceLabel")}</div>
 
       <nav className="sidebar-nav" aria-label="Primary">
         {navItems.map((item) => {
@@ -53,16 +56,24 @@ export function AppSidebar({
               <span className="nav-item__icon">
                 <AppIcon name={item.icon} />
               </span>
-              {!isCollapsed ? (
-                <span className="nav-item__content">
-                  <strong>{item.label}</strong>
-                  <small>{item.detail}</small>
-                </span>
-              ) : null}
+              <span className="nav-item__content">
+                <strong>{item.label}</strong>
+                <small>{item.detail}</small>
+              </span>
             </button>
           );
         })}
       </nav>
+
+      <div className="sidebar-user-card">
+        <div className="user-avatar user-avatar--sidebar" aria-hidden="true">
+          {userName.charAt(0).toUpperCase()}
+        </div>
+        <div className="sidebar-user-copy">
+          <strong>{userName}</strong>
+          <small>{t("workspaceOwnerLabel")}</small>
+        </div>
+      </div>
 
       <button
         onClick={onSignOut}
@@ -72,7 +83,7 @@ export function AppSidebar({
         <span className="nav-item__icon">
           <AppIcon name="logout" />
         </span>
-        {!isCollapsed ? <span>{logoutLabel}</span> : null}
+        <span>{logoutLabel}</span>
       </button>
     </aside>
   );
