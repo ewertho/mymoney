@@ -16,7 +16,7 @@ Controle financeiro pessoal organizado por mês: o que entra, o que vence e o qu
 | Camada | Tecnologia |
 |---|---|
 | API | Node 24 executando TypeScript direto (sem build), Express 5, Mongoose 9, Zod 4 |
-| Web | React 19, Vite 8, TanStack Query 5, Zustand 5, CSS moderno (`light-dark()`, `color-mix()`) |
+| Web | React 19, Vite 8, TanStack Query 5, Zustand 5, CSS moderno (`light-dark()`, `color-mix()`), tipografia Fraunces + Geist |
 | Tipos | TypeScript 7 (compilador nativo) nos dois lados |
 | Infra | Docker Compose: MongoDB 8, API e Caddy servindo o build e repassando `/api` |
 

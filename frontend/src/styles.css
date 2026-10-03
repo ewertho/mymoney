@@ -9,8 +9,8 @@
   --rule: light-dark(#b7c9c0, #2c4257);
   --in: light-dark(#0b6a4d, #5fd0a6);
   --out: light-dark(#b91f47, #ff7494);
-  --display: "Bricolage Grotesque Variable", system-ui, sans-serif;
-  --body: "Onest Variable", system-ui, sans-serif;
+  --display: "Fraunces Variable", Georgia, serif;
+  --body: "Geist Variable", system-ui, sans-serif;
   --radius: 10px;
 }
 :root[data-theme="light"] { color-scheme: light; }
@@ -104,7 +104,7 @@ label input, label select, label textarea { font-size: 1rem; color: var(--ink); 
   margin: 0 auto;
   padding: clamp(2rem, 9vh, 7rem) clamp(1rem, 4vw, 2.5rem);
 }
-.auth-pitch h1 { font: 750 clamp(3.2rem, 11vw, 6.5rem)/0.9 var(--display); letter-spacing: -0.045em; font-stretch: 85%; }
+.auth-pitch h1 { font: 750 clamp(3rem, 8.5vw, 6rem)/0.9 var(--display); letter-spacing: -0.035em; font-variation-settings: "SOFT" 60, "opsz" 144; }
 .auth-pitch p { margin-top: 1.25rem; max-width: 30ch; font-size: 1.2rem; color: var(--muted); }
 .auth-form { display: grid; gap: 0.9rem; }
 
@@ -192,7 +192,7 @@ label input, label select, label textarea { font-size: 1rem; color: var(--ink); 
     var(--sheet);
 }
 .balance h2, .balance > p, .balance dl { width: fit-content; background: var(--sheet); padding-inline: 0.35rem; margin-left: -0.35rem; }
-.figure { font: 750 clamp(2.2rem, 7vw, 3rem)/1.1 var(--display); letter-spacing: -0.03em; font-stretch: 85%; color: var(--in); }
+.figure { font: 750 clamp(2.2rem, 7vw, 3rem)/1.1 var(--display); letter-spacing: -0.03em; color: var(--in); }
 .balance.negative .figure { color: var(--out); }
 .balance dl { display: grid; gap: 0.15rem; margin-top: 1rem; width: auto; margin-right: -0.35rem; padding-block: 0.4rem; }
 .balance dl div { display: flex; justify-content: space-between; gap: 1rem; }
@@ -236,3 +236,51 @@ dialog form { display: grid; gap: 0.7rem; }
   .leader { display: none; }
   .row-actions { margin-left: auto; }
 }
+
+/* Textura do papel: fibras + linhas onduladas em duas fases, como o fundo de segurança de um cheque */
+body {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .35 0 0 0 0 .3 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='22'%3E%3Cpath d='M0 11q20-12 40 0t40 0 40 0 40 0 40 0' fill='none' stroke='%232f7f68' stroke-opacity='.16'/%3E%3C/svg%3E") 0 0 / 160px 22px,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='22'%3E%3Cpath d='M-20 11q20-12 40 0t40 0 40 0 40 0 40 0' fill='none' stroke='%232f7f68' stroke-opacity='.1'/%3E%3C/svg%3E") 0 11px / 160px 22px,
+    var(--paper);
+  background-attachment: fixed;
+}
+
+.sheet { box-shadow: 0 1px 0 light-dark(#fff, transparent) inset, 0 8px 24px -18px light-dark(#12233a, #000); }
+
+/* Login: roseta guilhochê atrás do título e margem de microtexto, como no canhoto de um cheque */
+.auth { position: relative; isolation: isolate; }
+.auth-pitch { position: relative; }
+.auth-pitch::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 50% auto auto 0;
+  width: min(34rem, 120%);
+  aspect-ratio: 1;
+  translate: -22% -50%;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(from 0deg, color-mix(in oklab, var(--in) 26%, transparent) 0 1deg, transparent 1deg 6deg),
+    repeating-radial-gradient(circle, transparent 0 9px, color-mix(in oklab, var(--in) 22%, transparent) 9px 10px);
+  mask: radial-gradient(circle, transparent 22%, #000 23% 60%, transparent 70%);
+}
+.auth-pitch::after {
+  content: "MYMONEY • ENTRADAS • CONTAS • SALDO • ";
+  display: block;
+  margin-top: 1.5rem;
+  width: fit-content;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  font: 600 0.55rem var(--body);
+  letter-spacing: 0.3em;
+  color: var(--in);
+  border-block: 1px solid color-mix(in oklab, var(--in) 40%, transparent);
+  padding-block: 0.25rem;
+}
+
+/* "outubro de 2026" vira "Outubro de 2026": só a primeira letra sobe */
+.month-nav h1 { text-transform: none; }
+.month-nav h1::first-letter { text-transform: uppercase; }
