@@ -1,16 +1,15 @@
-import { app } from "./app";
-import { connectDatabase } from "./config/database";
-import { env } from "./config/env";
+import mongoose from "mongoose";
+import { app } from "./app.ts";
+import { env } from "./env.ts";
 
-async function bootstrap(): Promise<void> {
-  await connectDatabase();
+await mongoose.connect(env.MONGO_URI);
 
-  app.listen(env.port, () => {
-    console.log(`API running on http://localhost:${env.port}`);
+const server = app.listen(env.PORT, () => {
+  console.log(`mymoney api em :${env.PORT}`);
+});
+
+for (const signal of ["SIGINT", "SIGTERM"] as const) {
+  process.on(signal, () => {
+    server.close(() => mongoose.disconnect().then(() => process.exit(0)));
   });
 }
-
-bootstrap().catch((error) => {
-  console.error("Failed to start backend", error);
-  process.exit(1);
-});

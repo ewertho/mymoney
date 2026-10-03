@@ -1,0 +1,238 @@
+/* Identidade: papel de segurança de cheque. Fundo verde-água pálido, tinta azul-noite,
+   verde de caneta para o que entra e vermelho de carimbo para o que sai ou venceu. */
+:root {
+  color-scheme: light dark;
+  --paper: light-dark(#e6efea, #0e1a26);
+  --sheet: light-dark(#f8fbf9, #152434);
+  --ink: light-dark(#12233a, #e4edf0);
+  --muted: light-dark(#52657a, #93a8b8);
+  --rule: light-dark(#b7c9c0, #2c4257);
+  --in: light-dark(#0b6a4d, #5fd0a6);
+  --out: light-dark(#b91f47, #ff7494);
+  --display: "Bricolage Grotesque Variable", system-ui, sans-serif;
+  --body: "Onest Variable", system-ui, sans-serif;
+  --radius: 10px;
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1rem/1.5 var(--body);
+  font-variant-numeric: tabular-nums;
+}
+
+h1, h2, p, ul, dl, dd { margin: 0; }
+ul { padding: 0; list-style: none; }
+h2 { font: 600 1.05rem/1.3 var(--display); }
+small { color: var(--muted); font-size: 0.8125rem; }
+svg { width: 1.15em; height: 1.15em; flex: none; }
+
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* Controles */
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; border: 0; background: none; }
+button:disabled { opacity: 0.55; cursor: progress; }
+
+input:not([type="checkbox"]), select, textarea {
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+input[aria-invalid="true"] { border-color: var(--out); }
+input[type="checkbox"] { width: 1.1rem; height: 1.1rem; accent-color: var(--in); flex: none; }
+textarea { resize: vertical; }
+label { display: grid; gap: 0.25rem; font-size: 0.8125rem; color: var(--muted); }
+label input, label select, label textarea { font-size: 1rem; color: var(--ink); }
+
+.primary, .secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.primary { background: var(--ink); color: var(--paper); }
+.secondary { border: 1px solid var(--ink); }
+.link { padding: 0; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.icon { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 6px; color: var(--muted); }
+.icon:hover, .icon[aria-pressed="true"] { color: var(--ink); background: color-mix(in oklab, var(--ink) 9%, transparent); }
+.icon[aria-pressed="true"] { color: var(--in); }
+
+.error { color: var(--out); font-size: 0.875rem; }
+.empty { color: var(--muted); padding: 0.5rem 0; }
+
+/* Barra superior */
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  padding: 0.6rem clamp(1rem, 4vw, 2.5rem);
+  border-bottom: 1px solid var(--rule);
+}
+.brand { font: 700 1.15rem var(--display); letter-spacing: -0.02em; }
+.bar-actions { display: flex; margin-left: auto; }
+.month-nav { display: flex; align-items: center; gap: 0.25rem; margin-inline: auto; }
+.month-nav h1 { font: 600 1.15rem var(--display); min-width: 11ch; text-align: center; text-transform: capitalize; }
+
+/* Folha: a superfície onde se escreve */
+.sheet {
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+.sheet-head { display: flex; justify-content: space-between; align-items: baseline; }
+
+/* Entrar / criar conta */
+.auth {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 9vh, 7rem) clamp(1rem, 4vw, 2.5rem);
+}
+.auth-pitch h1 { font: 750 clamp(3.2rem, 11vw, 6.5rem)/0.9 var(--display); letter-spacing: -0.045em; font-stretch: 85%; }
+.auth-pitch p { margin-top: 1.25rem; max-width: 30ch; font-size: 1.2rem; color: var(--muted); }
+.auth-form { display: grid; gap: 0.9rem; }
+
+/* Mês */
+.month {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 1.25rem clamp(1rem, 4vw, 2.5rem) 4rem;
+}
+.ledger, .summary { display: grid; gap: 1.25rem; align-content: start; min-width: 0; }
+.notice { grid-column: 1 / -1; padding: 0.6rem 0.9rem; border-left: 3px solid var(--in); background: var(--sheet); }
+.notice.error { border-color: var(--out); }
+
+@media (min-width: 60rem) {
+  .month { grid-template-columns: minmax(0, 1fr) 22rem; }
+  .ledger { grid-column: 1; grid-row: 2 / span 3; }
+  .summary { grid-column: 2; grid-row: 2; position: sticky; top: 1.25rem; }
+}
+
+/* Linhas de lançamento: nome, pontilhado de livro-caixa, valor */
+.rows { margin-top: 0.5rem; }
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--rule) 55%, transparent);
+}
+.row-name { display: grid; overflow-wrap: anywhere; min-width: 0; }
+.leader { flex: 1; min-width: 1rem; align-self: end; margin-bottom: 0.45rem; border-bottom: 2px dotted var(--rule); }
+.amount { font: 600 1rem var(--display); white-space: nowrap; }
+.amount.in { color: var(--in); }
+.amount.out { color: var(--out); }
+.row.paid .row-name, .row.paid .amount { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+.row.paid small { text-decoration: none; }
+.row-actions { display: flex; }
+
+/* O carimbo é o único ornamento da tela */
+.stamp {
+  padding: 0.05rem 0.4rem;
+  border: 1.5px solid currentColor;
+  border-radius: 3px;
+  font: 700 0.7rem var(--display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  rotate: -5deg;
+}
+.stamp.paid { color: var(--in); }
+.stamp.overdue { color: var(--out); }
+
+.entry {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.6rem;
+  align-items: end;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--rule);
+}
+.entry .grow { grid-column: span 2; }
+.entry .check, .entry .error { grid-column: 1 / -1; }
+.check { display: flex; align-items: center; gap: 0.5rem; color: var(--ink); font-size: 0.9rem; }
+@media (max-width: 30rem) { .entry .grow { grid-column: auto; } }
+
+.notes { display: grid; gap: 1rem; justify-items: start; }
+.notes label { width: 100%; }
+
+/* Sobra do mês: fundo guilhochê, como a faixa do valor num cheque */
+.balance {
+  padding: 1.4rem 1.25rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background:
+    repeating-radial-gradient(circle at 0 50%, transparent 0 7px, color-mix(in oklab, var(--in) 16%, transparent) 7px 8px),
+    repeating-radial-gradient(circle at 100% 50%, transparent 0 7px, color-mix(in oklab, var(--in) 16%, transparent) 7px 8px),
+    var(--sheet);
+}
+.balance.negative {
+  background:
+    repeating-radial-gradient(circle at 0 50%, transparent 0 7px, color-mix(in oklab, var(--out) 16%, transparent) 7px 8px),
+    repeating-radial-gradient(circle at 100% 50%, transparent 0 7px, color-mix(in oklab, var(--out) 16%, transparent) 7px 8px),
+    var(--sheet);
+}
+.balance h2, .balance > p, .balance dl { width: fit-content; background: var(--sheet); padding-inline: 0.35rem; margin-left: -0.35rem; }
+.figure { font: 750 clamp(2.2rem, 7vw, 3rem)/1.1 var(--display); letter-spacing: -0.03em; font-stretch: 85%; color: var(--in); }
+.balance.negative .figure { color: var(--out); }
+.balance dl { display: grid; gap: 0.15rem; margin-top: 1rem; width: auto; margin-right: -0.35rem; padding-block: 0.4rem; }
+.balance dl div { display: flex; justify-content: space-between; gap: 1rem; }
+.balance dt { color: var(--muted); }
+.balance dd { font-weight: 600; }
+
+.overdue-list { border-color: var(--out); }
+
+.cats { display: grid; gap: 0.9rem; margin-top: 0.75rem; }
+.cats li { display: grid; grid-template-columns: 1fr auto; gap: 0.15rem 1rem; }
+.cats meter { grid-column: 1 / -1; width: 100%; height: 0.5rem; }
+.cats small { grid-column: 1 / -1; }
+.cats .over small, .cats .over .amount { color: var(--out); }
+meter { appearance: none; border: 0; border-radius: 99px; background: color-mix(in oklab, var(--ink) 10%, transparent); overflow: hidden; }
+meter::-webkit-meter-bar { background: none; border: 0; height: 0.5rem; }
+meter::-webkit-meter-optimum-value { background: var(--ink); border-radius: 99px; }
+meter::-moz-meter-bar { background: var(--ink); border-radius: 99px; }
+.over meter::-webkit-meter-optimum-value { background: var(--out); }
+.over meter::-moz-meter-bar { background: var(--out); }
+
+.chart { width: 100%; height: auto; margin-top: 0.75rem; }
+.chart text { font: 500 9px var(--body); fill: var(--muted); text-transform: capitalize; }
+.chart line { stroke: var(--rule); }
+.bar-in, .key.in { fill: var(--in); background: var(--in); }
+.bar-out, .key.out { fill: var(--out); background: var(--out); }
+.legend { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8125rem; color: var(--muted); }
+.key { width: 0.7rem; height: 0.7rem; border-radius: 2px; }
+.key.out { margin-left: 0.75rem; }
+
+dialog { width: min(26rem, calc(100vw - 2rem)); color: var(--ink); }
+dialog::backdrop { background: color-mix(in oklab, #06101a 55%, transparent); }
+dialog form { display: grid; gap: 0.7rem; }
+.inline { grid-template-columns: 1fr 9rem; align-items: center; font-size: 1rem; color: var(--ink); }
+.dialog-actions { display: flex; justify-content: end; gap: 0.6rem; margin-top: 0.5rem; }
+
+/* Telas estreitas: o mês desce para a própria linha e o pontilhado dá lugar ao nome */
+@media (max-width: 36rem) {
+  .month-nav { order: 3; width: 100%; justify-content: space-between; }
+  .row { flex-wrap: wrap; }
+  .row-name { flex: 1 1 9rem; }
+  .leader { display: none; }
+  .row-actions { margin-left: auto; }
+}

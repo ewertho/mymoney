@@ -1,56 +1,34 @@
+# Dev:  docker compose up -d mongodb   (e npm run dev em backend/ e frontend/)
+# Prod: cp .env.example .env && docker compose up -d --build
 services:
   mongodb:
     image: mongo:8
-    container_name: mymoney-mongodb
     restart: unless-stopped
-    ports:
-      - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: mymoney
-      MONGO_INITDB_ROOT_PASSWORD: mymoney
-      MONGO_INITDB_DATABASE: mymoney
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-mymoney}
+    ports:
+      - "127.0.0.1:27017:27017" # só a própria máquina alcança o banco
     volumes:
-      - mymoney-mongo-data:/data/db
-    networks:
-      - mymoney-net
+      - mongo-data:/data/db
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: mymoney-backend
+    build: ./backend
     restart: unless-stopped
     depends_on:
       - mongodb
     environment:
-      PORT: 3000
-      MONGO_URI: mongodb://mymoney:mymoney@mongodb:27017/mymoney?authSource=admin
-      JWT_SECRET: mymoney-super-secret
-      JWT_EXPIRES_IN: 12h
-      CORS_ORIGIN: http://localhost:5173
-    ports:
-      - "3000:3000"
-    networks:
-      - mymoney-net
+      MONGO_URI: mongodb://mymoney:${MONGO_PASSWORD:-mymoney}@mongodb:27017/mymoney?authSource=admin
+      JWT_SECRET: ${JWT_SECRET:?defina JWT_SECRET no .env}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8101}
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: mymoney-frontend
+  web:
+    build: ./frontend
     restart: unless-stopped
     depends_on:
       - backend
-    environment:
-      VITE_API_URL: http://localhost:3000/api
     ports:
-      - "5173:5173"
-    networks:
-      - mymoney-net
+      - "${WEB_PORT:-8101}:80"
 
 volumes:
-  mymoney-mongo-data:
-
-networks:
-  mymoney-net:
-    driver: bridge
+  mongo-data:
