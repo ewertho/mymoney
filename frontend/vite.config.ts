@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: "0.0.0.0",
-    port: 5173,
+    // Em dev o front fala com /api na mesma origem, igual à produção (Caddy faz o mesmo papel lá).
+    proxy: { "/api": "http://localhost:4007" },
   },
 });
